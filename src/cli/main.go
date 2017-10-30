@@ -11,12 +11,19 @@ import (
 )
 
 var port int
+var slow bool
 
 func init() {
 	flag.IntVar(&port, "port", bitcoin.BLOCKCHAIN_DEFAULT_PORT, "blockchain port")
+	flag.BoolVar(&slow, "slow", false, "POW speed")
+}
+
+func usage() {
+	flag.PrintDefaults()
 }
 
 func main() {
+	flag.Usage = usage
 	flag.Parse()
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	bitcoin.Start(getIPAddress(), port)
